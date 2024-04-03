@@ -30,13 +30,15 @@
         foreach($this->routes as $route){
             
             if($route['uri'] === $uri && $route['method'] === $method ){
-                require basePath($route['controller']);
+                require basePath('App/' . $route['controller']);
                 return;
             }        
-            http_response_code(404);
-         require   basePath('./controllers/error/404.php');
-            exit;
         }
+
+        http_response_code(404);
+        require   basePath('./controllers/error/404.php');
+           exit;
+
 
     }
  }
