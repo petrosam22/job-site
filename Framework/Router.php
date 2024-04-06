@@ -34,7 +34,7 @@ namespace Framework;
         foreach($this->routes as $route){
             
             if($route['uri'] === $uri && $route['method'] === $method ){
-            //EXTRACT CONTROLLER AND CONTROLLER METHOD
+             //EXTRACT CONTROLLER AND CONTROLLER METHOD
             $controller ='App\\Controllers\\' . $route['controller'];
             $controllerMethod = $route['controllerMethod'];
 
@@ -50,6 +50,9 @@ namespace Framework;
          http_response_code(404);
          require   basePath('../App/controller/error/404.php');
          exit;
+             }        
+        }
+ 
+      
 
-    }
- }
+ 

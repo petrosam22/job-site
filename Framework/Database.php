@@ -32,10 +32,12 @@ class Database {
 
         try{
             $sth = $this->conn->prepare($query);
+ 
             foreach( $params as $param => $value){
                 $sth->bindValue(':' . $param , $value);
 
-            }
+           
+             }
             $sth->execute();
             return $sth;
 
