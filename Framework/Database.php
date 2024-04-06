@@ -1,5 +1,9 @@
 <?php 
 
+namespace Framework;
+use PDO;
+use Exception;
+use PDOException;
 
 class Database {
     public $conn;
@@ -24,10 +28,14 @@ class Database {
     }
 
 
-    public function query($query){
+    public function query($query , $params = []){
 
         try{
             $sth = $this->conn->prepare($query);
+            foreach( $params as $param => $value){
+                $sth->bindValue(':' . $param , $value);
+
+            }
             $sth->execute();
             return $sth;
 

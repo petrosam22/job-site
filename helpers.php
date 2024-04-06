@@ -8,18 +8,20 @@ function basePath($path= ''){
 
  function view($name , $data = []){
 
-    $views =   basePath("views/{$name}.view.php");
-    if(file_exists($views)){
-       extract($data);
-        require $views;
-    }else{
-        echo 'view not found';
+    $viewPath = basePath("App/views/{$name}.view.php");
+
+    if (file_exists($viewPath)) {
+      extract($data);
+      require $viewPath;
+    } else {
+      echo "View '{$name} not found!'";
     }
+
 }
 
 function loadPartial($name){ 
 
-     $PartialsPath=  basePath("views/partials/{$name}.php");
+     $PartialsPath=  basePath("App/views/partials/{$name}.php");
      if(file_exists($PartialsPath)){
         return $PartialsPath;
     }else{
@@ -30,4 +32,8 @@ function loadPartial($name){
 
 function dd($value){
     die(var_dump($value));
+}
+function formatSalary($salary)
+{
+  return '$' . number_format(floatval($salary));
 }

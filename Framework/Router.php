@@ -1,13 +1,17 @@
 <?php 
+namespace Framework;
 
  class Router {
     protected $routes =[];
 
- public function registerRoute($method , $uri,$controller){
-    $this->routes[] = [
+ public function registerRoute($method , $uri,$action){
+
+    list($controller, $controllerMethod) = explode('@',$action);
+     $this->routes[] = [
         'method'=>$method,
         'uri'=>$uri,
-        'controller'=>$controller
+        'controller'=>$controller,
+        'controllerMethod'=>$controllerMethod
     ];
  }
     public function get($uri, $controller){
@@ -30,13 +34,22 @@
         foreach($this->routes as $route){
             
             if($route['uri'] === $uri && $route['method'] === $method ){
-                require basePath($route['controller']);
+            //EXTRACT CONTROLLER AND CONTROLLER METHOD
+            $controller ='App\\Controllers\\' . $route['controller'];
+            $controllerMethod = $route['controllerMethod'];
+
+            //instantiate the controller and call method
+
+                $controllerInstance = new $controller();
+                  $controllerInstance->$controllerMethod();
                 return;
-            }        
-            http_response_code(404);
-         require   basePath('./controllers/error/404.php');
-            exit;
-        }
+             }        
+         }
+
+
+         http_response_code(404);
+         require   basePath('../App/controller/error/404.php');
+         exit;
 
     }
  }
